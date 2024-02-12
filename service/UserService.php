@@ -1,4 +1,5 @@
 <?php
+include "../../config/conn.php";
 interface IUserService
 {
   public function register($user);
@@ -7,22 +8,61 @@ interface IUserService
 
 class UserService implements IUserService
 {
-  public function register($user)
+  private $conn;
+  public function __construct() {
+    global $conn;
+    $this->conn = $conn;
+  }
+  public function register($user){
+    $sql = "INSERT INTO users(name, gender, username, password ) VALUES (
+      '" . $user->getName() . "', 
+     '" . $user->getGender() . "', 
+     '" . $user->getUsername() . "', 
+     '" . $user->getPassword() . "'
+     )";
+     $status = $this->conn->query($sql);
+     if($status){
+        return true;
+     }else{
+      return false;
+     }
+  }
+  public function register1($user)
   {
-    session_start();
+    // $conn = new Database();
+    // $conn->sql = "INSERT INTO users(name, gender, username, password ) VALUES (
+    //    '" . $user->getName() . "', 
+    //   '" . $user->getGender() . "', 
+    //   '" . $user->getUsername() . "', 
+    //   '" . $user->getPassword() . "'
+    //   )";
 
-    $_SESSION['userId'] = $user->getId();
-    $_SESSION['username'] = $user->getUsername();
+    // $status = $conn->getConn()->query($conn->sql);
+    // if ($status === true) {
+    //   echo "<script>
+    //       console.log('user created successfully');
+    //   </script>";
 
-    header("Location: ../index.php");
+    //   session_start();
 
-    echo "Testing";
+    //   $_SESSION['userId'] = $user->getId();
+    //   $_SESSION['username'] = $user->getUsername();
+
+    //   header("Location: ../index.php");
+
+    // } else {
+    //   echo "<script>
+    //       console.log('user creating unsuccessful');
+    //   </script>";
+    // }
+
+    
   }
   public function login($username, $password)
   {
     session_start();
 
-    
+
 
     header("Location: ../index.php");
   }
