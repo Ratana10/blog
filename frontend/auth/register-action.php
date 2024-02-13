@@ -29,14 +29,14 @@ if (isset($_POST['register'])) {
 
 
 
-  // $name = $_POST['name'];
-  // $gender = $_POST['gender'];
-  // $username = $_POST['username'];
-  // $password = $_POST['password'];
+  $name = $_POST['name'];
+  $gender = $_POST['gender'];
+  $username = $_POST['username'];
+  $password = $_POST['password'];
 
-  // $user = new User($name, $gender, $username, $password);
+  $user = new User(1, $name, $gender, $username, $password);
 
-  // $userService = new UserService();
-  // $userService->register($user);
+  $userService = new UserService();
+  $userService->register($user);
 }
 ?>

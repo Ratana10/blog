@@ -9,23 +9,31 @@ interface IUserService
 class UserService implements IUserService
 {
   private $conn;
-  public function __construct() {
+  public function __construct()
+  {
     global $conn;
     $this->conn = $conn;
   }
-  public function register($user){
+  public function register($user)
+  {
     $sql = "INSERT INTO users(name, gender, username, password ) VALUES (
       '" . $user->getName() . "', 
      '" . $user->getGender() . "', 
      '" . $user->getUsername() . "', 
      '" . $user->getPassword() . "'
      )";
-     $status = $this->conn->query($sql);
-     if($status){
-        return true;
-     }else{
-      return false;
-     }
+    $status = $this->conn->query($sql);
+    // fail
+    if (!$status) {
+      echo "<script>
+            console.log('Error user creating');
+        </script>";
+    }
+
+    // successs
+    session_start();
+    $_SESSION['username'] = $user->getUsername();
+    header("Location: ../index.php");
   }
   public function register1($user)
   {
@@ -56,14 +64,23 @@ class UserService implements IUserService
     //   </script>";
     // }
 
-    
+
   }
   public function login($username, $password)
   {
     session_start();
 
+    $sql = "SELECT * FROM users WHERE username= '$username' AND password = '$password' ";
+    $result = $this->conn->query($sql);
 
+    if ($result->num_rows == 1) {
+      $row = $result->fetch_assoc();
+      echo $result->num_rows;
+      $user = new User($row['id'], $row['name'], $row['gender'], $row['username'], $row['password']);
+      // echo "result: " . $user->toString();
+      $_SESSION['username'] = $user->getUsername();
+      header("Location: ../index.php");
 
-    header("Location: ../index.php");
+    }
   }
 }

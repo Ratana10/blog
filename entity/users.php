@@ -7,8 +7,9 @@ class User
   private $username;
   private $password;
 
-  function __construct($name, $gender, $username, $password)
+  function __construct($id = 1, $name, $gender, $username, $password)
   {
+    $this->setId($id);
     $this->setName($name);
     $this->setGender($gender);
     $this->setUsername($username);

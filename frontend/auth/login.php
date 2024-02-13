@@ -23,7 +23,10 @@ include "../includes/header.php";
         } ?>
       </span>
     </div>
-    <button class="btn btn-primary mt-4" name="login">Login</button>
+    <div class="text-end">
+      <p>don't have an account? <a href="register.php">register</a></p>
+    </div>
+    <button class="btn btn-primary mt-4 btn-block" name="login">Login</button>
   </form>
 </div>
 <?php
